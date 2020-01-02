@@ -11,6 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = theme => ({
   root: {
@@ -21,6 +22,9 @@ const styles = theme => ({
   },
   table: {
     minWidth: 1080
+  },
+  progress: {
+    margin: theme.spacing(2)
   }
 });
 
@@ -56,12 +60,23 @@ const customers = [{
   'job': '대학생'
 }]
 */
+/*
+  1) constructor()
+  2) componentWillMount()
+  3) render()
+  4) componentDidMount()
+
+  props or state => shouldComponentUpdate()  --> render 다시 불러옴
+  상태만 잘 관리하면 된다.
+
+*/
 
 
 class App extends Component {
 
   state = {
-    customers: ""
+    customers: "",
+    completed: 0
   }
 
   componentDidMount(){
@@ -75,6 +90,11 @@ class App extends Component {
     const response = await fetch('/api/customers');
     const body = await response.json();
     return body;
+  }
+
+  progress = () => {
+    const { completed } = this.state;
+    this.setState({ completed: completed >= 100 ? 0 : completed + 1 });
   }
 
   render() {
@@ -107,7 +127,13 @@ class App extends Component {
                     job={c.job}
                   />
                   );
-            }) : ""}
+            }) : 
+            <TableRow>
+              <TableCell colSpan="6" align="center">
+                <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed} />
+              </TableCell>
+            </TableRow>
+            }
           </TableBody>
         </Table>
       </Paper>
