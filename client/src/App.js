@@ -15,13 +15,14 @@ import Paper from '@material-ui/core/Paper';
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit *3,
+    /* marginTop: theme.spacing.unit *3, */
+    marginTop: theme.spacing(3),
     overflowX: "auto"
   },
   table: {
     minWidth: 1080
   }
-})
+});
 
 // const MyComponent = () =>
 //   <ExifOrientationImg
@@ -29,6 +30,7 @@ const styles = theme => ({
 //     alt="A waterfall"
 //   />
 
+/*
 const customers = [{
   'id': 1,
   'image': 'https://placeimg.com/64/64/1',
@@ -53,10 +55,28 @@ const customers = [{
   'gender': '남자',
   'job': '대학생'
 }]
-
+*/
 
 
 class App extends Component {
+
+  state = {
+    customers: ""
+  }
+
+  componentDidMount(){
+    this.timer = setInterval(this.progress, 20);
+    this.callApi()
+    .then(res => this.setState({customers: res}))
+    .catch(err => console.log(err));
+  }
+
+  callApi = async () => {
+    const response = await fetch('/api/customers');
+    const body = await response.json();
+    return body;
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -73,7 +93,10 @@ class App extends Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {customers.map(c => {return(
+            {/* {customers.map(c => {return(    
+                자기 자신에서 관리하다가 state로 관리하므로 this가 붙음.
+            */}
+            {this.state.customers ? this.state.customers.map(c => {return(
                   <Customer
                     key={c.id}
                     id={c.id}
@@ -84,7 +107,7 @@ class App extends Component {
                     job={c.job}
                   />
                   );
-            })}
+            }) : ""}
           </TableBody>
         </Table>
       </Paper>
