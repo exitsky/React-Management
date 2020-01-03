@@ -30,14 +30,33 @@ const styles = theme => ({
 });
 
 class App extends Component {
-
+  /*
   state = {
     customers: "",
     completed: 0
   }
+  // state를 제거하고 생성자를 통해서 구현
+  */
+  constructor(props) {
+    super(props);
+    this.state = {
+      customers: "",
+      completed: 0
+    }
+  }
+
+  stateRefresh = () => {
+    this.setState({
+      customers: "",
+      completed: 0
+    });
+    this.callApi()
+      .then(res => this.setState({customers: res}))
+      .catch(err => console.log(err));
+  }
 
   componentDidMount(){
-    //this.timer = setInterval(this.progress, 20);
+    this.timer = setInterval(this.progress, 20);
     this.callApi()
       .then(res => this.setState({customers: res}))
       .catch(err => console.log(err));
@@ -49,10 +68,10 @@ class App extends Component {
     return body;
   }
 
- /*  progress = () => {
+  progress = () => {
     const { completed } = this.state;
     this.setState({ completed: completed >= 100 ? 0 : completed + 1 });
-  } */
+  }
   handleValueChange(e) {
     let nextState = {};
     nextState[e.target.name] = e.target.value;
@@ -92,14 +111,14 @@ class App extends Component {
               }) : 
               <TableRow>
                 <TableCell colSpan="6" align="center">
-                  {/* <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed} /> */}
+                  <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed} />
                 </TableCell>
               </TableRow>
               }
             </TableBody>
           </Table>
         </Paper>
-        <CustomerAdd />
+        <CustomerAdd stateRefresh={this.stateRefresh}/>
       </div>
     )
   }
