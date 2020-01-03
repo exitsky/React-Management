@@ -91,6 +91,7 @@ class App extends Component {
                 <TableCell>생년월일</TableCell>
                 <TableCell>성별</TableCell>
                 <TableCell>직업</TableCell>
+                <TableCell>설정</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -98,7 +99,7 @@ class App extends Component {
                   자기 자신에서 관리하다가 state로 관리하므로 this가 붙음.
               */}
               {this.state.customers ? this.state.customers.map(c => {return(
-                    <Customer
+                    <Customer stateRefresh={this.stateRefresh}
                       key={c.id}
                       id={c.id}
                       image={c.image}
