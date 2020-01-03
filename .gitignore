@@ -4,6 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
+# upload
+/upload
 
 # database
 /database.json
