@@ -146,9 +146,9 @@ class CustomerAdd extends React.Component {
                         </label>
                         <br/>
                         <TextField label="이름" type="text" name="userName" value={this.state.userName} onChange={this.handleValueChange} /><br/>
-                        <TextField type="생년월일" name="birthday" value={this.state.birthday} onChange={this.handleValueChange} /><br/>
-                        <TextField type="성별" name="gender" value={this.state.gender} onChange={this.handleValueChange} /><br/>
-                        <TextField type="직업" name="job" value={this.state.job} onChange={this.handleValueChange} /><br/>
+                        <TextField label="생년월일" type="text" name="birthday" value={this.state.birthday} onChange={this.handleValueChange} /><br/>
+                        <TextField label="성별" type="text" name="gender" value={this.state.gender} onChange={this.handleValueChange} /><br/>
+                        <TextField label="직업" type="text" name="job" value={this.state.job} onChange={this.handleValueChange} /><br/>
                     </DialogContent>
                     <DialogActions>
                         <Button variant="contained" color="primary" onClick={this.handleFormSummit}>추가</Button>
